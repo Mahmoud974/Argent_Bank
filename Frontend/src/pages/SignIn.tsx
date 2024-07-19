@@ -39,10 +39,7 @@ const SignIn = () => {
         })
       );
 
-      // Stockage du token et des informations utilisateur dans sessionStorage
-      sessionStorage.setItem('token', responseData.token);
-      sessionStorage.setItem('firstName', responseData.user.firstName);
-      sessionStorage.setItem('lastName', responseData.user.lastName);
+    
 
       setIsLoggedIn(true);
       navigate('/profile');
@@ -58,9 +55,7 @@ const SignIn = () => {
    */
   const handleLogout = () => {
     // Nettoyage des données de session
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('firstName');
-    sessionStorage.removeItem('lastName');
+   
 
     setIsLoggedIn(false);
     navigate('/');
