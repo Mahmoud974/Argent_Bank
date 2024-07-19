@@ -11,7 +11,7 @@ import { clearUser } from '../slice/userSlice';
 export default function App() {
   const dispatch = useDispatch();
   const { email, token } = useSelector((state: RootState) => state.user);
-  console.log(email);
+
   
   const isLoggedIn = !!token;
 
