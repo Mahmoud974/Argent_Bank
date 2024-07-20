@@ -1,10 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { setUser, clearUser } from '../slice/userSlice';
-import { handleSignIn, updateUserProfile } from '../actions/service';
+import { setUser } from '../slice/userSlice';
+import {  getUser, updateUserProfile, logout } from '../actions/service';
+import Transactions from '../components/Transactions';
+
 
 const User = () => {
   const dispatch = useDispatch();
@@ -18,23 +21,11 @@ const User = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      if (email && password) {
+      if (token) {
         try {
-          // Remplacer handleSignIn avec votre fonction d'API pour récupérer les détails de l'utilisateur
-          const { user } = await handleSignIn(email, password);
-          setFirstName(user.firstName);
-          setLastName(user.lastName);
-
-          // Mettre à jour les données utilisateur dans Redux
-          dispatch(
-            setUser({
-              email: user.email,
-              password,
-              token,
-              firstName: user.firstName,
-              lastName: user.lastName,
-            })
-          );
+          const { firstName: userFirstName, lastName: userLastName } = await getUser(token);
+          setFirstName(userFirstName);
+          setLastName(userLastName);
         } catch (error) {
           console.error('Error fetching user details:', error);
         }
@@ -42,7 +33,7 @@ const User = () => {
     };
 
     fetchUserDetails();
-  }, [dispatch, email, password]);
+  }, [token]);
 
   const handleSave = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -62,7 +53,7 @@ const User = () => {
         setShowConfirmation(true);
         setTimeout(() => {
           setShowConfirmation(false);
-          setIsEditing(false); // Retour à l'état initial après la confirmation
+          setIsEditing(false);
         }, 3000);
       } catch (error) {
         console.error('Error updating profile:', error);
@@ -72,15 +63,11 @@ const User = () => {
     }
   };
 
-  const handleLogout = () => {
-    // Déconnexion de l'utilisateur en supprimant les données de l'utilisateur dans Redux
-    dispatch(clearUser());
-    setIsLoggedIn(false);
-  };
+
 
   return (
     <div className="">
-      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} email={firstName} password="" />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={logout} email={firstName} password="" />
       <div className="bg-[#12022B] min-h-screen flex flex-col items-center pt-12">
         <div className="text-center mb-8">
           <h1 className="text-white text-4xl mb-4">Welcome back</h1>
@@ -137,50 +124,7 @@ const User = () => {
           )}
         </div>
 
-        <ul className="container mx-auto px-4">
-          <li className="w-5/6 flex- mx-auto mb-12">
-            <div className="bg-white p-6 border-purple-800 shadow-md w-98">
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                <div>
-                  <h2 className="">Argent Bank Checking (x8349)</h2>
-                  <p className="text-gray-700 text-3xl font-bold space-y-6">$2,082.79</p>
-                  <p className="text-gray-500">Available Balance</p>
-                </div>
-                <button className="bg-[#00BC77] sm:w-auto w-full text-white sm:mt-0 mt-2 px-4 py-2 focus:outline-none focus:shadow-outline">
-                  View transactions
-                </button>
-              </div>
-            </div>
-          </li>
-          <li className="w-5/6 flex- mx-auto mb-12">
-            <div className="border-purple-800 bg-white p-6 shadow-md w-98">
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                <div>
-                  <h2 className="">Argent Bank Checking (x67124)</h2>
-                  <p className="text-gray-700 text-3xl font-bold space-y-6">$10,928.42</p>
-                  <p className="text-gray-500">Available Balance</p>
-                </div>
-                <button className="bg-[#00BC77] sm:w-auto w-full text-white sm:mt-0 mt-2 px-4 py-2 focus:outline-none focus:shadow-outline">
-                  View transactions
-                </button>
-              </div>
-            </div>
-          </li>
-          <li className="w-5/6 flex- mx-auto mb-12">
-            <div className="border-purple-800 bg-white p-6 shadow-md w-98">
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                <div>
-                  <h2 className="">Argent Bank Checking (x5201)</h2>
-                  <p className="text-gray-700 text-3xl font-bold space-y-6">$184.30</p>
-                  <p className="text-gray-500">Available Balance</p>
-                </div>
-                <button className="bg-[#00BC77] sm:w-auto w-full text-white sm:mt-0 mt-2 px-4 py-2 focus:outline-none focus:shadow-outline">
-                  View transactions
-                </button>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <Transactions/>
       </div>
       <Footer />
     </div>

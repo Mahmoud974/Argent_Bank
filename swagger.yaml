@@ -110,8 +110,10 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /transactions/{accountId}:
+  /transactions:
     get:
+      security:
+        - Bearer: []
       tags:
         - Transaction Module
       summary: Get all transactions for the current month of an account
@@ -122,6 +124,10 @@ paths:
           required: true
           description: ID of the bank account
           type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
       produces:
         - application/json
       responses:
@@ -149,8 +155,10 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
 
-  /transaction/{transactionId}:
+  /transactions/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Transaction Module
       summary: Get details of a specific transaction
@@ -161,6 +169,10 @@ paths:
           required: true
           description: ID of the transaction
           type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
       produces:
         - application/json
       responses:
@@ -177,6 +189,8 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     put:
+      security:
+        - Bearer: []
       tags:
         - Transaction Module
       summary: Update additional information of a transaction
@@ -187,6 +201,10 @@ paths:
           required: true
           description: ID of the transaction
           type: string
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
         - in: body
           name: body
           description: Update transaction additional information
@@ -217,6 +235,7 @@ securityDefinitions:
 
 definitions:
   User:
+    type: object
     properties:
       email:
         type: string
@@ -231,6 +250,7 @@ definitions:
         type: string
         description: user last name
   Login:
+    type: object
     properties:
       email:
         type: string

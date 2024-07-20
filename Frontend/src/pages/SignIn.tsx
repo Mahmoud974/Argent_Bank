@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../slice/userSlice';
-import { handleSignIn } from '../actions/service';
+import { login } from '../actions/service';
 
 
 /**
@@ -22,13 +22,12 @@ const SignIn = () => {
   /**
    * Gère la soumission du formulaire de connexion.
    * Effectue la requête de connexion et met à jour l'état de connexion de l'utilisateur.
-   * Stocke le token et les informations utilisateur en session storage en cas de succès.
    * @param {FormEvent<HTMLFormElement>} event - Événement de soumission du formulaire.
    */
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const responseData = await handleSignIn(email, password);
+      const responseData = await login(email, password);
       dispatch(
         setUser({
           email,
@@ -39,7 +38,7 @@ const SignIn = () => {
         })
       );
 
-    
+      
 
       setIsLoggedIn(true);
       navigate('/profile');
@@ -51,12 +50,8 @@ const SignIn = () => {
 
   /**
    * Gère la déconnexion de l'utilisateur.
-   * Nettoie les données de session et redirige l'utilisateur vers la page d'accueil.
    */
-  const handleLogout = () => {
-    // Nettoyage des données de session
-   
-
+  const handleLogout = () => {   
     setIsLoggedIn(false);
     navigate('/');
   };

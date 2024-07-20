@@ -4,7 +4,7 @@ import Logo from '../assets/argentBankLogo.png';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { PiSignOutBold } from "react-icons/pi";
-import { handleSignIn } from '../actions/service';
+import { login } from '../actions/service';
 
 /**
  * Propriétés du composant Navbar.
@@ -32,7 +32,7 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
      */
     const signIn = async () => {
       try {
-        const responseData = await handleSignIn(email, password);
+        const responseData = await login(email, password);
         setFirstName(responseData.user.firstName);
         firstName
       } catch (error) {
