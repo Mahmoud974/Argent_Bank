@@ -1,13 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { setUser } from '../slice/userSlice';
-import {  getUser, updateUserProfile, logout } from '../actions/service';
+import { setUser, clearUser } from '../slice/userSlice'; // Import clearUser action
+import { getUser, updateUserProfile } from '../actions/service'; // Remove logout import from service
 import Transactions from '../components/Transactions';
-
 
 const User = () => {
   const dispatch = useDispatch();
@@ -63,11 +61,14 @@ const User = () => {
     }
   };
 
-
+  const handleLogout = () => {
+    dispatch(clearUser()); // Dispatch clearUser action to clear user state and token
+    setIsLoggedIn(false); // Update local state to reflect logged out status
+  };
 
   return (
     <div className="">
-      <Navbar isLoggedIn={isLoggedIn} onLogout={logout} email={firstName} password="" />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} email={firstName} password="" />
       <div className="bg-[#12022B] min-h-screen flex flex-col items-center pt-12">
         <div className="text-center mb-8">
           <h1 className="text-white text-4xl mb-4">Welcome back</h1>
@@ -124,7 +125,7 @@ const User = () => {
           )}
         </div>
 
-        <Transactions/>
+        <Transactions />
       </div>
       <Footer />
     </div>

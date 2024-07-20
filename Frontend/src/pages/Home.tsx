@@ -10,8 +10,8 @@ import { clearUser } from '../slice/userSlice';
 
 export default function App() {
   const dispatch = useDispatch();
-  const { email, token } = useSelector((state: RootState) => state.user);
-  console.log(email);
+  const {token,firstName } = useSelector((state: RootState) => state.user);
+  
   
   const isLoggedIn = !!token;
 
@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <div>
-      <Navbar isLoggedIn={isLoggedIn} email={email} password="" onLogout={handleLogout} />
+      <Navbar isLoggedIn={isLoggedIn} email={firstName} password="" onLogout={handleLogout} />
       <div className="relative">
         <img src={Banner} alt="bank tree" className="w-full h-auto lg:-mt-36" />
         {/* Responsive box mobile */}
