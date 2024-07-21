@@ -1,5 +1,3 @@
-
-
 const Transactions = () => {
     return (
        <ul className="container mx-auto px-4">

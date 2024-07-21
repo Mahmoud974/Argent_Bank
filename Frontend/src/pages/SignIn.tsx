@@ -4,8 +4,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../slice/userSlice';
-import { login } from '../actions/service';
+import { clearUser, setUser } from '../slice/userSlice';
+import { login } from '../actions/actions';
 
 
 /**
@@ -37,9 +37,6 @@ const SignIn = () => {
           lastName: responseData.user.lastName,
         })
       );
-
-      
-
       setIsLoggedIn(true);
       navigate('/profile');
     } catch (error) {
@@ -49,9 +46,10 @@ const SignIn = () => {
   };
 
   /**
-   * Gère la déconnexion de l'utilisateur.
+   * Gèrer la déconnexion de l'utilisateur.
    */
   const handleLogout = () => {   
+    dispatch(clearUser());
     setIsLoggedIn(false);
     navigate('/');
   };

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { setUser, clearUser } from '../slice/userSlice'; // Import clearUser action
-import { getUser, updateUserProfile } from '../actions/service'; // Remove logout import from service
+import { setUser, clearUser } from '../slice/userSlice';
+import { updateUserProfile, logout } from '../actions/actions';
 import Transactions from '../components/Transactions';
 
 const User = () => {
@@ -17,22 +17,11 @@ const User = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.user.token);
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (token) {
-        try {
-          const { firstName: userFirstName, lastName: userLastName } = await getUser(token);
-          setFirstName(userFirstName);
-          setLastName(userLastName);
-        } catch (error) {
-          console.error('Error fetching user details:', error);
-        }
-      }
-    };
 
-    fetchUserDetails();
-  }, [token]);
-
+  /**
+   * Modifier le profil
+   * @param event 
+   */
   const handleSave = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -61,9 +50,17 @@ const User = () => {
     }
   };
 
-  const handleLogout = () => {
-    dispatch(clearUser()); // Dispatch clearUser action to clear user state and token
-    setIsLoggedIn(false); // Update local state to reflect logged out status
+  /**
+   * Déconnecter lke compte usser
+   */
+  const handleLogout = async () => {
+    try {
+      await logout();
+      dispatch(clearUser());
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
@@ -124,7 +121,6 @@ const User = () => {
             </form>
           )}
         </div>
-
         <Transactions />
       </div>
       <Footer />

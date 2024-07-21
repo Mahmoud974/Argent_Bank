@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Vous pouvez choisir un autre stockage si nécessaire
+import storage from 'redux-persist/lib/storage';
 import userReducer from '../slice/userSlice';
 
 // Configuration de redux-persist
@@ -17,6 +17,13 @@ const store = configureStore({
   reducer: {
     user: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+     
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }),
 });
 
 // Création du persistor

@@ -4,10 +4,10 @@ import Logo from '../assets/argentBankLogo.png';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { PiSignOutBold } from "react-icons/pi";
-import { login } from '../actions/service';
+import { login } from '../actions/actions';
 
 /**
- * Propriétés du composant Navbar.
+ * Typer Propriétés du composant Navbar.
  */
 interface NavbarProps {
   isLoggedIn: boolean; 
@@ -16,11 +16,7 @@ interface NavbarProps {
   password: string; 
 }
  
-/**
- * Composant Navbar affichant les liens de navigation et les informations utilisateur.
- * @param {NavbarProps} props - Propriétés du composant.
- * @returns {JSX.Element} Composant Navbar.
- */
+
 const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Element => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -28,7 +24,6 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
   useEffect(() => {
     /**
      * Connecte l'utilisateur en utilisant l'email et le mot de passe fournis.
-     * Récupère les détails de l'utilisateur lors de la connexion réussie.
      */
     const signIn = async () => {
       try {
@@ -46,7 +41,7 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
   }, [email, password]);
 
   /**
-   * Gère l'action de déconnexion de l'utilisateur.
+   * Gèrer l'action de déconnexion de l'utilisateur.
    * Déconnecte l'utilisateur et navigue vers la page d'accueil.
    */
   const handleLogout = () => {
@@ -66,7 +61,7 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
                <NavLink to="/profile">
             <p className="mr-4 text-black"> {email} </p>
                
-   </NavLink> 
+              </NavLink> 
               <PiSignOutBold/>
               <NavLink to="/" className="flex items-center">
               <p className="ml-1 hover:underline cursor-pointer" onClick={handleLogout}>
