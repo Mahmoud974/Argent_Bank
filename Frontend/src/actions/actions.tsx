@@ -3,22 +3,31 @@ const API_BASE_URL = 'http://localhost:3001/api/v1';
 
 
 /**
- * Connecter à la page de profile
+ * Récupérer les données utilisateurs
+ * @param res 
+ * @returns 
+ */
+const getUser = (res: any) => {
+  const { token, user } = res.data.body;
+  return { token, user };
+};
+
+/**
+ * Se connecter à la page de profil
  * @param email 
  * @param password 
  * @returns 
  */
 export const login = async (email: string, password: string) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/user/login`, {
-            email,
-            password
-        });
-        const { token, user } = response.data.body;
-        return { token, user };
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/login`, {
+      email,
+      password
+    });
+    return getUser(response);
+  } catch (error) {
+    throw error;
+  }
 };
 /**
  * Déconnecter de la page 
