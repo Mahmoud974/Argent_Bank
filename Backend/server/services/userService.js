@@ -79,14 +79,13 @@ module.exports.updateUserProfile = async (serviceData) => {
       .split("Bearer")[1]
       .trim();
     const decodedJwtToken = jwt.decode(jwtToken);
-
     const user = await User.findOneAndUpdate(
       { _id: decodedJwtToken.id },
       {
         firstName: serviceData.body.firstName,
         lastName: serviceData.body.lastName,
       },
-      { new: true, useFindAndModify: false } // Ajoutez useFindAndModify: false ici
+      { new: true }
     );
 
     if (!user) {

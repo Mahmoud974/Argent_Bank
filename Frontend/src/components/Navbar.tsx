@@ -26,14 +26,19 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
      * Connecte l'utilisateur en utilisant l'email et le mot de passe fournis.
      */
     const signIn = async () => {
-      try {
-        const responseData = await login(email, password);
-        setFirstName(responseData.user.firstName);
-        firstName
-      } catch (error) {
-        console.error('Erreur de connexion :', error);
-      }
-    };
+  try {
+    const responseData = await login(email, password);
+   firstName
+    if (responseData && responseData.user) {
+      setFirstName(responseData.user.firstName);
+    } else {
+      console.error('Données utilisateur non disponibles');
+    }
+  } catch (error) {
+    console.error('Erreur de connexion :', error);
+  }
+};
+
 
     if (email && password) {
       signIn();

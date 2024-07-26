@@ -17,7 +17,6 @@ const User = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.user.token);
 
-
   /**
    * Modifier le profil
    * @param event 
@@ -51,7 +50,7 @@ const User = () => {
   };
 
   /**
-   * Déconnecter lke compte usser
+   * Déconnecter le compte utilisateur
    */
   const handleLogout = async () => {
     try {
@@ -64,10 +63,10 @@ const User = () => {
   };
 
   return (
-    <div className="">
+    <main className="">
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} email={firstName} password="" />
-      <div className="bg-[#12022B] min-h-screen flex flex-col items-center pt-12">
-        <div className="text-center mb-8">
+      <section className="bg-[#12022B] min-h-screen flex flex-col items-center pt-12">
+        <header className="text-center mb-8">
           <h1 className="text-white text-4xl mb-4">Welcome back</h1>
           {!isEditing ? (
             <div>
@@ -81,9 +80,9 @@ const User = () => {
             </div>
           ) : (
             <form onSubmit={handleSave}>
-              <div className="flex flex-col sm:flex-row justify-center items-center mb-4">
+              <fieldset className="flex flex-col sm:flex-row justify-center items-center mb-4">
                 {showConfirmation ? (
-                  <div className="text-green-500 text-lg">Modification faite !</div>
+                  <p className="text-green-500 text-lg">Modification faite !</p>
                 ) : (
                   <>
                     <input
@@ -102,8 +101,8 @@ const User = () => {
                     />
                   </>
                 )}
-              </div>
-              <div className="flex justify-center space-x-4">
+              </fieldset>
+              <fieldset className="flex justify-center space-x-4">
                 <button
                   type="submit"
                   className="bg-white text-purple-800 border-purple-800 w-4/12 hover:bg-purple-800 hover:text-white px-4 py-2 focus:outline-none focus:shadow-outline"
@@ -117,14 +116,14 @@ const User = () => {
                 >
                   Cancel
                 </button>
-              </div>
+              </fieldset>
             </form>
           )}
-        </div>
+        </header>
         <Transactions />
-      </div>
+      </section>
       <Footer />
-    </div>
+    </main>
   );
 };
 

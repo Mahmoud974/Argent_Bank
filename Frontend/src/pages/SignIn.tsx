@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { clearUser, setUser } from '../slice/userSlice';
 import { login } from '../actions/actions';
 
-
 /**
  * Connecter son email et password
  */
@@ -55,14 +54,14 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen">
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} email={email} password={password} />
-      <div className="flex-grow flex items-center justify-center bg-[#12022B]">
-        <div className="bg-white py-8 rounded shadow-md px-12">
+      <section className="flex-grow flex items-center justify-center bg-[#12022B]">
+        <article className="bg-white py-8 rounded shadow-md px-12">
           <FaUserCircle className="mx-auto my-4" size={16} />
           <h2 className="text-2xl mb-4 text-center">Sign In</h2>
           <form onSubmit={handleFormSubmit}>
-            <div className="mb-4">
+            <fieldset className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Username
               </label>
@@ -75,8 +74,8 @@ const SignIn = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-            </div>
-            <div className="mb-4">
+            </fieldset>
+            <fieldset className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
@@ -89,27 +88,27 @@ const SignIn = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-            </div>
-            <div className="mb-4">
+            </fieldset>
+            <fieldset className="mb-4">
               <label className="inline-flex items-center">
                 <input type="checkbox" className="form-checkbox" />
                 <span className="ml-2 text-gray-500">Remember me</span>
               </label>
-            </div>
-            <div className="flex items-center justify-between">
+            </fieldset>
+            <fieldset className="flex items-center justify-between">
               <button
                 type="submit"
                 className="underline bg-[#02BC77] hover:bg-blue-700 text-white font-bold py-2 w-full rounded focus:outline-none focus:shadow-outline"
               >
                 Sign In
               </button>
-            </div>
-            {errorMessage && <div className="mt-4 text-red-500 text-center">{errorMessage}</div>}
+            </fieldset>
+            {errorMessage && <p className="mt-4 text-red-500 text-center">{errorMessage}</p>}
           </form>
-        </div>
-      </div>
+        </article>
+      </section>
       <Footer />
-    </div>
+    </main>
   );
 };
 
