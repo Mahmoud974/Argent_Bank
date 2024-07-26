@@ -28,10 +28,13 @@ const Navbar = ({ isLoggedIn, onLogout, email, password }: NavbarProps): JSX.Ele
     const signIn = async () => {
   try {
     const responseData = await login(email, password);
-   firstName
+
+  
     if (responseData && responseData.user) {
       setFirstName(responseData.user.firstName);
+      firstName
     } else {
+      console.log();
       console.error('Données utilisateur non disponibles');
     }
   } catch (error) {

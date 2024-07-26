@@ -1,15 +1,22 @@
 import axios from 'axios';
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
-
 /**
- * Récupérer les données utilisateurs
- * @param res 
+ * Fetch user profile using the token
+ * @param token 
  * @returns 
  */
-const getUser = (res: any) => {
-  const { token, user } = res.data.body;
-  return { token, user };
+const getUser = async (token: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/profile`, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data.body;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -24,21 +31,24 @@ export const login = async (email: string, password: string) => {
       email,
       password
     });
-    return getUser(response);
+    const { token } = response.data.body;
+    const userProfile = await getUser(token);
+    return { token, user: userProfile };
   } catch (error) {
     throw error;
   }
 };
+
 /**
  * Déconnecter de la page 
  * @returns 
  */
 export const logout = () => {
-    
-    return new Promise<void>((resolve) => {
-        resolve();
-    });
+  return new Promise<void>((resolve) => {
+    resolve();
+  });
 };
+
 /**
  * Mettre à jour le nom et prenom
  * @param token 
@@ -47,20 +57,17 @@ export const logout = () => {
  * @returns 
  */
 export const updateUserProfile = async (token: string, firstName: string, lastName: string) => {
-    try {
-        const response = await axios.put(`${API_BASE_URL}/user/profile`, {
-            firstName,
-            lastName
-        }, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const response = await axios.put(`${API_BASE_URL}/user/profile`, {
+      firstName,
+      lastName
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data.body;
+  } catch (error) {
+    throw error;
+  }
 };
-
-;
-

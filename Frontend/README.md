@@ -98,8 +98,7 @@ Avery Moreau
 
 - You will need to have Node and `npm` installed locally on your machine.
 
-> [!WARNING]  
-> The [backend](https://github.com/Matthieu83600/ArgentBank-Backend) must also be installed in order to launch this project.
+
 
 ## Project setup
 
