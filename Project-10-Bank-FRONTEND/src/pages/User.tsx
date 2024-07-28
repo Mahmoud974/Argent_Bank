@@ -17,10 +17,11 @@ const User = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.user.token);
 
-  /**
-   * Modifier le profil
-   * @param event 
-   */
+/**
+ * Modifier le profil
+ * @param event 
+ */
+
   const handleSave = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -40,7 +41,7 @@ const User = () => {
         setTimeout(() => {
           setShowConfirmation(false);
           setIsEditing(false);
-        }, 3000);
+        }, 1800);
       } catch (error) {
         console.error('Error updating profile:', error);
       }
@@ -48,10 +49,9 @@ const User = () => {
       console.error('No token available for updating profile');
     }
   };
-
-  /**
-   * Déconnecter le compte utilisateur
-   */
+/**
+ * Déconnecter le profil
+ */
   const handleLogout = async () => {
     try {
       await logout();
@@ -102,21 +102,23 @@ const User = () => {
                   </>
                 )}
               </fieldset>
-              <fieldset className="flex justify-center space-x-4">
-                <button
-                  type="submit"
-                  className="bg-white text-purple-800 border-purple-800 w-4/12 hover:bg-purple-800 hover:text-white px-4 py-2 focus:outline-none focus:shadow-outline"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="bg-white text-purple-800 border-purple-800 hover:bg-purple-800 hover:text-white w-4/12 px-4 py-2 focus:outline-none focus:shadow-outline"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel
-                </button>
-              </fieldset>
+              {!showConfirmation && (
+                <fieldset className="flex justify-center space-x-4">
+                  <button
+                    type="submit"
+                    className="bg-white text-purple-800 border-purple-800 w-4/12 hover:bg-purple-800 hover:text-white px-4 py-2 focus:outline-none focus:shadow-outline"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="bg-white text-purple-800 border-purple-800 hover:bg-purple-800 hover:text-white w-4/12 px-4 py-2 focus:outline-none focus:shadow-outline"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel
+                  </button>
+                </fieldset>
+              )}
             </form>
           )}
         </header>
